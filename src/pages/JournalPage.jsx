@@ -1,12 +1,108 @@
+import { useState, useEffect } from "react";
+
 function JournalPage() {
+  const [entry, setEntry] = useState("");
+  const [entries, setEntries] = useState([]);
+
+  useEffect(() => {
+    const stored = JSON.parse(localStorage.getItem("journalEntries")) || [];
+    setEntries(stored);
+  }, []);
+
+  const handleSave = () => {
+    if (!entry.trim()) return;
+
+    const newEntries = [...entries, { text: entry, date: new Date().toISOString() }];
+
+    setEntries(newEntries);
+    localStorage.setItem("journalEntries", JSON.stringify(newEntries));
+
+    setEntry("");
+    alert("Entry saved! 💜");
+  };
+
   return (
-    <div className="p-6">
-      <h1 className="text-3xl font-bold text-center mt-10">
-        Gratitude Journal
-      </h1>
-      <p className="text-center text-gray-600 mt-4">
-        Start writing your daily gratitude entries here.
-      </p>
+    <div className="min-h-screen bg-purple-50 p-6">
+      <h1 className="text-3xl font-bold text-center mb-6">Gratify Journal</h1>
+
+      {/* Responsive grid: main content (2 cols) + sidebar (1 col) */}
+      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+        {/* Main column: spans 2 on md+ */}
+        <main className="md:col-span-2">
+          {/* Entry form */}
+          <section className="bg-white p-6 rounded-lg shadow mb-6">
+            <label className="block mb-2 text-lg font-medium">Write your thoughts</label>
+
+            <textarea
+              className="w-full h-40 p-4 rounded-lg border border-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-500"
+              placeholder="How are you feeling today?"
+              value={entry}
+              onChange={(e) => setEntry(e.target.value)}
+            ></textarea>
+
+            <button
+              onClick={handleSave}
+              className="mt-4 w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700 transition"
+            >
+              Save Entry
+            </button>
+          </section>
+
+          
+          <section className="mb-6">
+            <h2 className="text-2xl font-semibold mb-4">Your Entries</h2>
+
+            {entries.length === 0 ? (
+              <p className="text-gray-600">No entries yet… start writing ✨</p>
+            ) : (
+              <ul className="space-y-4">
+                {entries
+                  .slice() // copy
+                  .reverse() // show newest first
+                  .map((item, index) => (
+                    <li
+                      key={index}
+                      className="p-4 bg-white shadow rounded-lg border border-purple-200"
+                    >
+                      <div className="text-gray-800 whitespace-pre-wrap">{item.text}</div>
+                      <div className="text-xs text-gray-500 mt-2">
+                        {new Date(item.date).toLocaleString()}
+                      </div>
+                    </li>
+                  ))}
+              </ul>
+            )}
+          </section>
+        </main>
+
+        
+        <aside className="space-y-6">
+        
+          <div className="bg-white p-4 rounded-lg shadow">
+            <h3 className="text-lg font-semibold mb-2">Today&apos;s Affirmation</h3>
+            <p className="text-gray-700">"You are capable of amazing things."</p>
+            <div className="mt-4 flex gap-3">
+              <button className="flex-1 bg-indigo-600 text-white py-2 rounded hover:bg-indigo-700 transition">
+                Get New
+              </button>
+              <button className="px-3 py-2 border rounded">Save</button>
+            </div>
+          </div>
+
+         
+          <div className="bg-white p-4 rounded-lg shadow">
+            <h3 className="text-lg font-semibold mb-2">Streak</h3>
+            <div className="text-3xl font-bold">🔥 4</div>
+            <p className="text-sm text-gray-600 mt-2">Days in a row</p>
+          </div>
+
+        
+          <div className="bg-white p-4 rounded-lg shadow">
+            <h4 className="font-medium mb-2">Quick tip</h4>
+            <p className="text-sm text-gray-600">Write for at least 2 minutes — short and sincere works best.</p>
+          </div>
+        </aside>
+      </div>
     </div>
   );
 }
