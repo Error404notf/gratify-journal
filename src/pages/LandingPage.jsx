@@ -13,12 +13,7 @@ function LandingPage() {
           Go to Journal
         </Link>
 
-        <Link
-          to="/affirmations"
-          className="px-6 py-3 bg-green-600 text-white rounded-lg text-center hover:bg-green-700"
-        >
-          Daily Affirmations
-        </Link>
+        
       </div>
       <p className="text-center text-gray-600 mt-4">
         Your daily space for gratitude & positive affirmations.

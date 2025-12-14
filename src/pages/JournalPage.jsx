@@ -136,10 +136,10 @@ function JournalPage() {
           <AffirmationCard />
 
           <div className="bg-white p-4 rounded-lg shadow">
-            <h3 className="text-lg font-semibold mb-2">Streak</h3>
-            <div className="text-3xl font-bold">🔥 {streak}</div>
-            <p className="text-sm text-gray-600 mt-2">Days in a row</p>
-          </div>
+  <h3 className="text-lg font-semibold mb-2">Streak</h3>
+  <div className="text-3xl font-bold">🔥 {streak}</div>
+  <p className="text-sm text-gray-600 mt-2">Days in a row</p>
+</div>
 
           <div className="bg-white p-4 rounded-lg shadow">
             <h4 className="font-medium mb-2">Quick tip</h4>
