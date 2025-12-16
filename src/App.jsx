@@ -40,14 +40,7 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<LoginPage />} />
 
-          <Route
-            path="/journal"
-            element={
-              <ProtectedRoute>
-                <JournalPage />
-              </ProtectedRoute>
-            }
-          />
+          <Route path="/journal" element={<JournalPage />} />
 
           <Route path="/saved-affirmations" element={<SavedAffirmationsPage />} />
         </Routes>
