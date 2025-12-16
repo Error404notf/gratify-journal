@@ -1,60 +1,54 @@
 import { useState, useEffect } from "react";
+import { useAuth } from "../context/AuthContext";
 import AffirmationCard from "../components/AffirmationCard";
 
 function JournalPage() {
+  const { user, logout } = useAuth();
   const [entry, setEntry] = useState("");
   const [entries, setEntries] = useState([]);
   const [streak, setStreak] = useState(0);
 
+  // Helper: returns YYYY-MM-DD
+  const getToday = () => new Date().toISOString().split("T")[0];
+
   useEffect(() => {
     const storedEntries =
       JSON.parse(localStorage.getItem("journalEntries")) || [];
+    const storedStreak =
+      Number(localStorage.getItem("journalStreak")) || 0;
+
     setEntries(storedEntries);
-
-    const savedDate = localStorage.getItem("lastEntryDate");
-
-    if (!savedDate) {
-      setStreak(0);
-      return;
-    }
-
-    const today = new Date().toDateString();
-    const yesterday = new Date();
-    yesterday.setDate(yesterday.getDate() - 1);
-
-    if (savedDate === today) {
-      setStreak(Number(localStorage.getItem("journalStreak")) || 1);
-    } else if (savedDate === yesterday.toDateString()) {
-      setStreak(Number(localStorage.getItem("journalStreak")) || 1);
-    } else {
-      setStreak(0);
-    }
+    setStreak(storedStreak);
   }, []);
 
   const handleSave = () => {
     if (!entry.trim()) return;
 
-    const today = new Date().toDateString();
-    const lastDate = localStorage.getItem("lastEntryDate");
+    const today = getToday();
+    const lastEntryDate = localStorage.getItem("lastEntryDate");
 
     let newStreak = 1;
 
-    if (lastDate) {
+    if (lastEntryDate) {
       const yesterday = new Date();
       yesterday.setDate(yesterday.getDate() - 1);
+      const yesterdayStr = yesterday.toISOString().split("T")[0];
 
-      if (lastDate === today) {
-        newStreak = streak || 1;
-      } else if (lastDate === yesterday.toDateString()) {
+      if (lastEntryDate === today) {
+        newStreak = streak; // already counted today
+      } else if (lastEntryDate === yesterdayStr) {
         newStreak = streak + 1;
       } else {
-        newStreak = 1;
+        newStreak = 1; // streak reset
       }
     }
 
     const newEntries = [
       ...entries,
-      { text: entry, date: new Date().toISOString() },
+      {
+        text: entry,
+        date: new Date().toISOString(),
+      },
     ];
 
     setEntries(newEntries);
@@ -70,6 +64,18 @@ function JournalPage() {
 
   return (
     <div className="min-h-screen bg-purple-50 p-6">
+      <div className="flex justify-between items-center mb-4">
+  <p className="text-sm text-gray-600">
+    Logged in as <strong>{user?.name}</strong>
+  </p>
+
+  <button
+    onClick={logout}
+    className="text-sm text-red-500 hover:underline"
+  >
+    Logout
+  </button>
+</div>
       <h1 className="text-3xl font-bold text-center mb-6">
         Gratify Journal
       </h1>
@@ -107,19 +113,22 @@ function JournalPage() {
               </p>
             ) : (
               <ul className="space-y-4">
-                {[...entries].reverse().map((item, index) => (
-                  <li
-                    key={index}
-                    className="p-4 bg-white shadow rounded-lg border border-purple-200"
-                  >
-                    <div className="text-gray-800 whitespace-pre-wrap">
-                      {item.text}
-                    </div>
-                    <div className="text-xs text-gray-500 mt-2">
-                      {new Date(item.date).toLocaleString()}
-                    </div>
-                  </li>
-                ))}
+                {entries
+                  .slice()
+                  .reverse()
+                  .map((item, index) => (
+                    <li
+                      key={index}
+                      className="p-4 bg-white shadow rounded-lg border border-purple-200"
+                    >
+                      <div className="text-gray-800 whitespace-pre-wrap">
+                        {item.text}
+                      </div>
+                      <div className="text-xs text-gray-500 mt-2">
+                        {new Date(item.date).toLocaleString()}
+                      </div>
+                    </li>
+                  ))}
               </ul>
             )}
           </section>
