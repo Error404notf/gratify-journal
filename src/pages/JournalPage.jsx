@@ -1,3 +1,4 @@
+import {motion} from 'framer-motion'
 import { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 import AffirmationCard from "../components/AffirmationCard";
@@ -63,7 +64,12 @@ function JournalPage() {
   };
 
   return (
-    <div className="min-h-screen bg-purple-50 p-6">
+    <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.4 }}
+    className="min-h-screen bg-purple-50 p-6"
+  >
       <div className="flex justify-between items-center mb-4">
   <p className="text-sm text-gray-600">
     Logged in as <strong>{user?.name}</strong>
@@ -76,14 +82,14 @@ function JournalPage() {
     Logout
   </button>
 </div>
-      <h1 className="text-3xl font-bold text-center mb-6">
+      <h1 className="text-4xl font-semibold text-center mb-6 text-purple-800">
         Gratify Journal
       </h1>
 
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
         <main className="md:col-span-2">
           <section className="bg-white p-6 rounded-lg shadow mb-6">
-            <label className="block mb-2 text-lg font-medium">
+            <label className="block mb-2 text-lg font-medium text-purple-700">
               Write your thoughts
             </label>
 
@@ -96,10 +102,12 @@ function JournalPage() {
 
             <button
               onClick={handleSave}
-              className="mt-4 w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700 transition"
+              className="mt-4 w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700 transition active:scale-95"
+
             >
               Save Entry
             </button>
+            
           </section>
 
           <section>
@@ -119,9 +127,9 @@ function JournalPage() {
                   .map((item, index) => (
                     <li
                       key={index}
-                      className="p-4 bg-white shadow rounded-lg border border-purple-200"
+                       className="p-5 bg-white shadow rounded-xl border border-purple-200 hover:shadow-md transition"
                     >
-                      <div className="text-gray-800 whitespace-pre-wrap">
+                      <div  className="text-gray-800 whitespace-pre-wrap leading-relaxed">
                         {item.text}
                       </div>
                       <div className="text-xs text-gray-500 mt-2">
@@ -153,7 +161,7 @@ function JournalPage() {
           </div>
         </aside>
       </div>
-    </div>
+      </motion.div>
   );
 }
 

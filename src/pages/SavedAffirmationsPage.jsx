@@ -16,6 +16,12 @@ export default function SavedAffirmationsPage() {
 
   return (
     <div className="min-h-screen bg-purple-50 p-6">
+       <a
+      href="/journal"
+      className="text-sm text-purple-600 hover:underline inline-block mb-4"
+    >
+      ← Back to Journal
+    </a>
       <h1 className="text-3xl font-bold text-center mb-6">
         Saved Affirmations 💜
       </h1>

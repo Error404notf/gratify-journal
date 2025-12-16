@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
 export default function AffirmationCard() {
@@ -55,12 +56,17 @@ export default function AffirmationCard() {
   };
 
   return (
-    <div className="bg-white p-4 rounded-lg shadow">
+    <motion.div
+    initial={{ opacity: 0, scale: 0.95 }}
+    animate={{ opacity: 1, scale: 1 }}
+    transition={{ duration: 0.4 }}
+    className="bg-white p-4 rounded-lg shadow"
+  >
       <h3 className="text-lg font-semibold mb-2">
         Today&apos;s Affirmation
       </h3>
 
-      <p className="text-gray-700 italic text-sm">
+      <p  className="text-purple-700 italic text-base leading-relaxed">
         "{affirmation}"
       </p>
 
@@ -70,6 +76,13 @@ export default function AffirmationCard() {
       >
         Save
       </button>
-    </div>
+      <a
+  href="/saved-affirmations"
+  className="block mt-3 text-sm text-center text-purple-600 hover:underline"
+>
+  View saved affirmations →
+</a>
+
+      </motion.div>
   );
 }
