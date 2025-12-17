@@ -1,3 +1,4 @@
+import Navbar from "../components/Navbar";
 import { useEffect, useState } from "react";
 
 export default function SavedAffirmationsPage() {
@@ -16,6 +17,7 @@ export default function SavedAffirmationsPage() {
 
   return (
     <div className="min-h-screen bg-purple-50 p-6">
+      <Navbar />
        <a
       href="/journal"
       className="text-sm text-purple-600 hover:underline inline-block mb-4"

@@ -49,7 +49,7 @@ export default function AffirmationCard() {
         "savedAffirmations",
         JSON.stringify(saved)
       );
-      alert("Affirmation saved 💜");
+      alert("Saved -- you can revisit this anytime 💜");
     } else {
       alert("Already saved ✨");
     }

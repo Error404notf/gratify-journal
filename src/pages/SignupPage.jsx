@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { login } from "../auth/auth";
+import { signup } from "../auth/auth";
 import { useNavigate, Link } from "react-router";
 
-export default function LoginPage() {
+export default function SignupPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -11,14 +11,14 @@ export default function LoginPage() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const result = login(email, password);
+    const result = signup(email, password);
 
     if (!result.success) {
       setError(result.message);
       return;
     }
 
-    navigate("/journal");
+    navigate("/login");
   };
 
   return (
@@ -27,7 +27,7 @@ export default function LoginPage() {
         onSubmit={handleSubmit}
         className="bg-white p-6 rounded-lg shadow w-full max-w-md"
       >
-        <h2 className="text-2xl font-bold mb-4 text-center">Login</h2>
+        <h2 className="text-2xl font-bold mb-4 text-center">Sign Up</h2>
 
         {error && (
           <p className="text-red-500 text-sm mb-3 text-center">{error}</p>
@@ -52,13 +52,13 @@ export default function LoginPage() {
         />
 
         <button className="w-full bg-purple-600 text-white py-2 rounded hover:bg-purple-700">
-          Login
+          Create Account
         </button>
 
         <p className="text-sm text-center mt-4">
-          Don’t have an account?{" "}
-          <Link to="/signup" className="text-purple-600 underline">
-            Sign up
+          Already have an account?{" "}
+          <Link to="/login" className="text-purple-600 underline">
+            Login
           </Link>
         </p>
       </form>
