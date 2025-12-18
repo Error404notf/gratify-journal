@@ -1,3 +1,5 @@
+import { motion } from "framer-motion";
+
 import Navbar from "../components/Navbar";
 import { useEffect, useState } from "react";
 import AffirmationCard from "../components/AffirmationCard";
@@ -63,6 +65,9 @@ function JournalPage() {
             <label className="block mb-2 text-lg font-medium text-gray-700">
               What's on your mind right now?
             </label>
+            <p className="text-sm text-gray-500 mb-3">
+  This is a private space. No one else can see what you write.
+</p>
 
             <textarea
              className="w-full h-44 p-4 rounded-lg border border-purple-200
@@ -80,6 +85,9 @@ function JournalPage() {
             >
               Save and breathe 🌿
             </button>
+            <p className="text-xs text-gray-400 mt-2 text-center">
+  You can edit or delete entries anytime.
+</p>
           </section>
 
           <section>
@@ -89,12 +97,16 @@ function JournalPage() {
             </h2>
 
             {entries.length === 0 ? (
-              <p className="text-gray-600">
-                You haven’t written yet — and that’s okay.
-                When you’re ready, this space is yours 💜
-              </p>
-              
-            ) : (
+  <div className="bg-purple-50 border border-purple-200 rounded-lg p-4 text-gray-700">
+    <p className="mb-2">
+      There’s nothing here yet — and that’s okay.
+    </p>
+    <p className="text-sm text-gray-600">
+      When you’re ready, writing even one sentence can help clear your mind.
+    </p>
+  </div>
+) : (
+
               <ul className="space-y-4">
                        <p className="text-sm text-gray-500 mb-3">
   Your recent reflections
@@ -103,17 +115,21 @@ function JournalPage() {
                   .slice()
                   .reverse()
                   .map((item, index) => (
-                    <li
-                      key={index}
-                      className="p-5 bg-white shadow-sm rounded-xl border border-purple-100"
-                    >
+                    <motion.li
+  key={index}
+  initial={{ opacity: 0, y: 8 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.3 }}
+  className="p-4 bg-white shadow rounded-lg border border-purple-200"
+>
+
                       <p className="whitespace-pre-wrap">
                         {item.text}
                       </p>
                       <p className="text-xs text-gray-500 mt-2">
                         {new Date(item.date).toLocaleString()}
                       </p>
-                    </li>
+                      </motion.li>
                   ))}
               </ul>
             )}

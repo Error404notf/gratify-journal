@@ -30,7 +30,8 @@ export default function SavedAffirmationsPage() {
 
       {saved.length === 0 ? (
         <p className="text-center text-gray-600">
-          You haven't saved any affirmations yet 💜
+          Nothing saved yet — come back when something resonates 💜
+
         </p>
       ) : (
         <ul className="max-w-xl mx-auto space-y-4">
