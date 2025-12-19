@@ -5,6 +5,8 @@ import Navbar from "../components/Navbar";
 import AffirmationCard from "../components/AffirmationCard";
 
 function JournalPage() {
+  const navigate = useNavigate();
+
   const [entry, setEntry] = useState("");
   const [entries, setEntries] = useState([]);
   const [streak, setStreak] = useState(0);
@@ -13,9 +15,16 @@ function JournalPage() {
   const [editingText, setEditingText] = useState("");
 
   const today = new Date().toDateString();
-  const navigate = useNavigate();
 
-  /* -------------------- LOAD DATA -------------------- */
+  /* ---------------- AUTH GUARD ---------------- */
+  useEffect(() => {
+    const user = localStorage.getItem("gratifyUser");
+    if (!user) {
+      navigate("/auth");
+    }
+  }, [navigate]);
+
+  /* ---------------- LOAD DATA ---------------- */
   useEffect(() => {
     const storedEntries =
       JSON.parse(localStorage.getItem("journalEntries")) || [];
@@ -26,32 +35,40 @@ function JournalPage() {
     setStreak(storedStreak);
   }, []);
 
-  /* -------------------- SAVE ENTRY -------------------- */
+  /* ---------------- SAVE ENTRY ---------------- */
   const handleSave = () => {
     if (!entry.trim()) return;
 
     const lastDate = localStorage.getItem("lastEntryDate");
     let newStreak = streak;
 
-    if (lastDate !== today) {
-      newStreak = lastDate ? streak + 1 : 1;
+    if (!lastDate) {
+      newStreak = 1;
+    } else if (lastDate !== today) {
+      const yesterday = new Date();
+      yesterday.setDate(yesterday.getDate() - 1);
+
+      if (lastDate === yesterday.toDateString()) {
+        newStreak = streak + 1;
+      } else {
+        newStreak = 1;
+      }
     }
 
-    const newEntries = [
-      ...entries,
-      {
-        id: crypto.randomUUID(),
-        text: entry,
-        date: new Date().toISOString(),
-      },
-    ];
+    const newEntry = {
+      id: crypto.randomUUID(),
+      text: entry,
+      date: new Date().toISOString(),
+    };
 
-    setEntries(newEntries);
+    const updatedEntries = [...entries, newEntry];
+
+    setEntries(updatedEntries);
     setStreak(newStreak);
 
     localStorage.setItem(
       "journalEntries",
-      JSON.stringify(newEntries)
+      JSON.stringify(updatedEntries)
     );
     localStorage.setItem("journalStreak", newStreak);
     localStorage.setItem("lastEntryDate", today);
@@ -59,7 +76,7 @@ function JournalPage() {
     setEntry("");
   };
 
-  /* -------------------- EDIT ENTRY -------------------- */
+  /* ---------------- EDIT ENTRY ---------------- */
   const startEdit = (item) => {
     setEditingId(item.id);
     setEditingText(item.text);
@@ -82,7 +99,7 @@ function JournalPage() {
     setEditingText("");
   };
 
-  /* -------------------- DELETE ENTRY -------------------- */
+  /* ---------------- DELETE ENTRY ---------------- */
   const deleteEntry = (id) => {
     const updated = entries.filter((item) => item.id !== id);
     setEntries(updated);
@@ -96,7 +113,7 @@ function JournalPage() {
     <div className="min-h-screen bg-linear-to-br from-purple-50 to-indigo-50">
       <Navbar />
 
-      <header className="text-center mb-8">
+      <header className="text-center mb-8 px-4">
         <h1 className="text-4xl font-bold text-purple-700">
           Gratify Journal
         </h1>
@@ -104,14 +121,14 @@ function JournalPage() {
           A safe space for your thoughts 🌿
         </p>
         <p className="text-sm text-gray-500 mt-2 max-w-xl mx-auto">
-          Gratify is designed to help you slow down, reflect,
-          and build emotional consistency through daily writing
-          and affirmations.
+          Gratify helps you slow down, reflect, and build
+          emotional consistency through daily writing and
+          affirmations.
         </p>
       </header>
 
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 px-4">
-        {/* -------------------- MAIN -------------------- */}
+        {/* ---------------- MAIN ---------------- */}
         <main className="md:col-span-2">
           <section className="bg-white p-6 rounded-xl shadow-md mb-6 border border-purple-100">
             <label className="block mb-2 text-lg font-medium text-gray-700">
@@ -145,7 +162,7 @@ function JournalPage() {
             </p>
           </section>
 
-          {/* -------------------- ENTRIES -------------------- */}
+          {/* ---------------- ENTRIES ---------------- */}
           <section>
             <h2 className="text-2xl font-semibold mb-4">
               Your Entries
@@ -240,7 +257,7 @@ function JournalPage() {
           </section>
         </main>
 
-        {/* -------------------- ASIDE -------------------- */}
+        {/* ---------------- ASIDE ---------------- */}
         <aside className="space-y-6 sticky top-6">
           <AffirmationCard />
 

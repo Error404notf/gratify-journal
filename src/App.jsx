@@ -30,6 +30,7 @@ import JournalPage from "./pages/JournalPage";
 import SavedAffirmationsPage from "./pages/SavedAffirmationsPage";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
+import AuthPage from "./pages/AuthPage";
 
 import ProtectedRoute from "./components/ProtectedRoute";
 
@@ -40,6 +41,8 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
+        <Route path="/auth" element={<AuthPage />} />
+
 
         <Route
           path="/journal"
