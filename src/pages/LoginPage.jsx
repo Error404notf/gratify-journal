@@ -18,7 +18,7 @@ export default function LoginPage() {
       return;
     }
 
-    navigate("/journal");
+    navigate("/home");
   };
 
   return (

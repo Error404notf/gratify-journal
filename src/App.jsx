@@ -31,7 +31,7 @@ import SavedAffirmationsPage from "./pages/SavedAffirmationsPage";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import AuthPage from "./pages/AuthPage";
-
+import HomePage from "./pages/HomePage";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
@@ -42,6 +42,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/auth" element={<AuthPage />} />
+        <Route path="/home" element={<HomePage />} />
 
 
         <Route
