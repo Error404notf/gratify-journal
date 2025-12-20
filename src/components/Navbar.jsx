@@ -7,7 +7,7 @@ export default function Navbar() {
       <h1 className="font-bold text-purple-700">Gratify 💜</h1>
 
       <div className="flex gap-4 items-center text-sm">
-        <Link to= "/homepage" className="hover:underline">
+        <Link to= "/home" className="hover:underline">
           Homepage
         </Link>
         <Link to="/journal" className="hover:underline">
