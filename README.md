@@ -83,6 +83,25 @@ Designing with empathy and user experience in mind
 Understanding that bugs are a natural part of building real applications
 
 
+## Project Context
+
+Gratify Journal is a personal reflection and mental wellness web app designed
+to encourage daily journaling, emotional awareness, and positive self-talk.
+
+The project was built iteratively while learning React, routing, state
+management, and basic authentication concepts. Features were refined and
+refactored as understanding improved, which is reflected in the commit history.
+
+The focus of this project is not perfection, but consistency, self-reflection,
+and learning through building.
+
+## Key Learning Outcomes
+- React state management with hooks
+- Local storage for persistence
+- Basic authentication flow
+- Conditional rendering and UX feedback
+- Component-based UI design
+
 
 👩🏽‍💻 Author
 
@@ -94,6 +113,4 @@ Passionate about mental health, healthy relationships, and building user-centere
 
 Gratify Journal is not about perfection — it’s about showing up.
 This project reflects both technical growth and a commitment to building tools that support emotional well-being.
-
-
 
