@@ -54,14 +54,7 @@ function App() {
           }
         />
 
-        {/* <Route
-          path="/affirmations"
-          element={
-            <ProtectedRoute>
-              <AffirmationsPage />
-            </ProtectedRoute>
-          }
-        /> */}
+        
 
         <Route
           path="/saved-affirmations"
