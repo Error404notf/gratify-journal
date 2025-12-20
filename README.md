@@ -70,7 +70,7 @@ Entry creation, editing, and deletion
 
 Affirmation generation and saving
 
-A demo walkthrough is available via a Loom video (submitted separately).
+
 
 🧠 Challenges & Learnings
 
